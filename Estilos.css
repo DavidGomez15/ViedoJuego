@@ -1,0 +1,286 @@
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    height: 100vh;
+    background: #293462;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.contenedor {
+    width: 90%;
+    height: 50%;
+    margin: 0 auto;
+    
+    position: relative;
+
+    background: linear-gradient(#b7d6c7 0%, transparent 60%, transparent 80%,  #6d757e 100%) #ffe2d1;/*linear-gradient(#90ebff, white);*/
+    transition: background-color 1s linear;
+    overflow: hidden;
+}
+
+.texto{
+    text-align: center;
+    margin: auto;
+    
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 100px;
+    color: #ffffff;
+    position: relative;
+    
+}
+
+
+
+.boton-b{
+    
+    margin-top: 100px;
+    padding: 15px;
+    border-radius: 25px;
+    background: #15133C;
+    font-size: 80px;
+    text-decoration: none;
+}
+
+.boton-b2{
+    
+   margin-top: 40px;
+    padding: 15px;
+    border-radius: 25px;
+    background: #15133C;
+    font-size: 80px;
+    text-decoration: none;
+}
+
+.altura{
+    position: relative;
+    top: 10px;
+}
+
+.nueva{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.boton-b:hover{
+    background: #000;
+}
+
+.boton-b2:hover{
+    background: #000;
+}
+
+.nueva:hover{
+    color: white;
+}
+
+.reglas{
+    margin: auto;
+    padding: 0;
+   
+    
+}
+
+.replay{
+    padding-right: 10px;
+}
+
+.return{
+    padding-left: 10px;
+}
+
+.regresar{
+  
+    position: relative;
+    left: -100px;
+
+}
+
+
+
+p{
+    color: white;
+    font-size: 25px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.p{
+    text-align: center;
+    
+}
+
+.img1{
+    margin-top: 15px;
+}
+
+.mediodia {
+    background-color: #ffdcf3;
+}
+
+.tarde {
+    background-color: #ffadad;
+}
+
+.noche {
+    background-color: #aca8c7;
+}
+
+.dino {
+    width: 84px;
+    height: 84px;
+
+    position: absolute;
+    bottom: 50px;
+    left: 42px;
+    z-index: 2;
+
+    background: url(img/dino.png) repeat-x 0px 0px;
+    background-size: 336px 84px;
+    background-position-x: 0px;
+
+}
+
+.dino-corriendo {
+    animation: animarDino 0.25s steps(2) infinite;
+}
+.dino-estrellado {
+    background-position-x: -252px;
+}
+
+.suelo {
+    width: 200%;
+    height: 150px;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+
+    background: url(img/mar.png) repeat-x 0px 0px;
+    background-size: 48px 258px;
+    animation: oleaje 1.5s ease-in-out infinite;
+
+}
+
+.obstaculo{
+    width: 48px;
+    height: 48px;
+
+    position: absolute;
+    left: 600px;
+    z-index: 1;
+
+}
+.obstaculo-flotante{
+    bottom: 90px;
+    background: url(img/obstaculo2.png)  no-repeat;
+    animation: abanear 1s ease-in-out infinite;
+}
+
+.obstaculo-hundido{
+    bottom: 0px;
+    background: url(img/obstaculo1.png)  no-repeat;
+}
+
+.nube{
+    width: 92px;
+    height: 26px;
+
+    position: absolute;
+    z-index: 0;
+
+    background: url(img/nube.png) no-repeat;
+    background-size: 92px 26px;
+}
+
+.moneda{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    z-index: 1;
+    
+    background: url(img/moneda.png) no-repeat center center;
+}
+
+.score{
+    width: 100px;
+    height: 30px;
+
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    z-index: 10;
+
+    color: #d48871;
+    font-family: Verdana;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.game-over{
+    display: none;
+
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+
+
+    text-align: center;
+    color: #092e77;
+    font-size: 30px;
+    font-family: Verdana;
+    font-weight: 700;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+.Empezar{
+    
+    width: 100px;
+    height: 30px;
+    border: none;
+    position: absolute;
+    bottom: 15px;
+    right: -50px;
+    
+
+    
+
+}
+
+@keyframes animarDino{
+    from{
+        background-position-x: -84px;
+    }
+    to{
+        background-position-x: -252px;
+    }
+}
+
+@keyframes abanear{
+    0%,100%{
+        bottom: 90px;
+    }
+    50%{
+        bottom: 84px;
+    }
+}
+
+@keyframes oleaje{
+    0%,100%{
+        bottom: 0px;
+    }
+    50%{
+        bottom: -10px;
+    }
+}
