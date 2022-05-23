@@ -4,10 +4,10 @@ var deltaTime = 0;
 if(document.readyState === "complete" || document.readyState === "interactive"){
     setTimeout(Init, 1);
 }else{
-    document.addEventListener("DOMContentLoaded", Init); 
+    document.addEventListener("DOMContentLoaded", Init);  //SE DEFINE EL AREA QUE SE VA A TRABAJAR
 }
 
-function Init() {
+function Init() {   //   CON ESTO INICIAMOS EL BUCLE DEL JUEGO/ INICIAN EL JUEGO CUANDO TODAS LAS IMAGENES SE CARGAN/ Y SE PROGRAMA UPDATE PARA LLAMARSE VARIAS VECES POR SEGUNDO
     time = new Date();
     Start();
     Loop();
@@ -20,9 +20,9 @@ function Loop() {
     requestAnimationFrame(Loop);
 }
 
-//****** GAME LOGIC ********//
+//****** logica del juego ********//
 
-var nivelDelMar = 100;
+var nivelDelMar = 100;                  //PROPIEDADES DEL JUEGO/SE INICIALIZAN TODAS LAS VARIABLES POR CADA OBJETO A UTILIZARSE
 var nivelDelMarCubriendo = 60;
 var velY = 0;
 var impulso = 900;
@@ -72,7 +72,7 @@ var audioSalto;
 var audioGameOver;
 
 function Start() {
-    gameOver = document.querySelector(".game-over");
+    gameOver = document.querySelector(".game-over");       //LUEGO SE SETEAN, SE PREPARAN PARA SR UTILIZADAS 
     suelo = document.querySelector(".suelo");
     contenedor = document.querySelector(".contenedor");
     textoScore = document.querySelector(".score");
@@ -83,8 +83,8 @@ function Start() {
     document.addEventListener("keydown", HandleKeyDown);
 }
 
-function Update() {
-    if(parado) return;
+function Update() {  
+    if(parado) return; //LLAMAMOS A LA FUNCION UPDATE QUIEN ES LA ENCARGADA DE LOS MOVIMIENTOS DEL DINO Y DE TODOS LOS OBSTACULOS Y OBJETOS DEL ENTORNO
     
     MoverDinosaurio();
     MoverSuelo();
@@ -95,7 +95,7 @@ function Update() {
     MoverNubes();
     DetectarColision();
 
-    if(dinoPosY >= nivelDelMar) { //fuera del agua
+    if(dinoPosY >= nivelDelMar) { //DENTRO DEL AGUA, ESTO HARA QUE SE LE CONYTRARESTRE A LA GRAVEDAD LA FUERZA DE EMPUJE Y MANTENDRA A FLOTE AL REX 
 
         velY -= gravedad * deltaTime;
     }else{
@@ -106,7 +106,7 @@ function Update() {
 }
 
 function VolumenSumergido() {
-    if(dinoPosY >= nivelDelMar) { //fuera del agua
+    if(dinoPosY >= nivelDelMar) { //FUERA DEL AGUA
         return 0;
     }else {
         return dino.clientWidth * Math.min(nivelDelMar - dinoPosY, dino.clientHeight);
@@ -119,7 +119,7 @@ function HandleKeyDown(ev){
     }
 }
 
-function Saltar(){
+function Saltar(){ //SI EL DINO ESTA CUBIERTO POR EL AGUA, SALTARA MENOS, SI ESTA A FLOTE EL SALTO SERA MAYOR
     if(!saltando){
         saltando = true;
         dino.classList.remove("dino-corriendo");
@@ -134,21 +134,21 @@ function Saltar(){
 }
 
 function MoverDinosaurio() {
-    if(dinoPosY < nivelDelMarCubriendo){
+    if(dinoPosY < nivelDelMarCubriendo){  //ACA DETECTAMOS SI EL DINOSAURIO ESTA TOCANDO EL AGUA
         TocarSuelo();
     }
     dinoPosY += velY * deltaTime;
     dino.style.bottom = dinoPosY+"px";
 }
 
-function TocarSuelo() {
+function TocarSuelo() { //ACA DETECTAMOS SI EL DINOSAURIO ESTA TOCANDO EL AGUA
     if(saltando){
         dino.classList.add("dino-corriendo");
     }
     saltando = false;
 }
 
-function MoverSuelo() {
+function MoverSuelo() { //CON ESTA FUNCION MOVELOS LAS OLAS, AL MISMO TIEMPO QUE EL PERSONAJE
     sueloX += CalcularDesplazamiento();
     suelo.style.left = -(sueloX % contenedor.clientWidth) + "px";
 }
@@ -157,34 +157,34 @@ function CalcularDesplazamiento() {
     return velEscenario * deltaTime * gameVel;
 }
 
-function Estrellarse() {
+function Estrellarse() { //ESTA FUNCION ES LA QUE DETECTA SI NOS ESTRELLAMOS Y AVISA QUE MUESTREN EL MENSAJE
     dino.classList.remove("dino-corriendo");
     dino.classList.add("dino-estrellado");
     parado = true;
 }
 
-function DecidirCrearObstaculos() {
+function DecidirCrearObstaculos() { //CREA OBSTACULOS NUEVOS, MAS ABAJO EN OTRA FUNCION SE OBTIENE LA FORMA PARA UBICARSEN 
     tiempoHastaObstaculo -= deltaTime;
     if(tiempoHastaObstaculo <= 0) {
         CrearObstaculo();
     }
 }
 
-function DecidirCrearMonedas() {
+function DecidirCrearMonedas() {//CREA NUEVAS MONEDAS 
     tiempoHastaMoneda -= deltaTime;
     if(tiempoHastaMoneda <= 0) {
         CrearMoneda();
     }
 }
 
-function DecidirCrearNubes() {
+function DecidirCrearNubes() {//CREA NUEVAS NUBES
     tiempoHastaNube -= deltaTime;
     if(tiempoHastaNube <= 0) {
         CrearNube();
     }
 }
 
-function CrearMoneda() {
+function CrearMoneda() {  //CREAMOS LAS MONEDAS LAS CUALES APARECEN DE MANERA ALEATORIA TAMBIEN Y EN DISTINTAS POSICIONES, CON ESTAS GANAMOS PUNTOS
     var moneda = document.createElement("div");
     contenedor.appendChild(moneda);
     moneda.classList.add("moneda");
@@ -197,7 +197,7 @@ function CrearMoneda() {
 }
 
 function CrearObstaculo() {
-    var obstaculo = document.createElement("div");
+    var obstaculo = document.createElement("div");  //ACA CREAMOS OBSTACULOS Y SE PONE ALEATORIO PARA PONER UNOS OBSTACULOS A FLOTE Y OTROS BAJO EL AGUA
     contenedor.appendChild(obstaculo);
     obstaculo.classList.add("obstaculo");
     obstaculo.posX = contenedor.clientWidth;
@@ -213,7 +213,7 @@ function CrearObstaculo() {
     tiempoHastaObstaculo = tiempoObstaculoMin + Math.random() * (tiempoObstaculoMax-tiempoObstaculoMin) / gameVel;
 }
 
-function CrearNube() {
+function CrearNube() {  //DE MANERA ALEATORIA COMO LAS MONEDAS Y LOS OBSTACULOS, TAMBIEN SE GENERAN NUBES EN DISTINTAS ALTURAS Y POSICIONES CADA CIERTO TIEMPO
     var nube = document.createElement("div");
     contenedor.appendChild(nube);
     nube.classList.add("nube");
@@ -225,7 +225,7 @@ function CrearNube() {
     tiempoHastaNube = tiempoNubeMin + Math.random() * (tiempoNubeMax-tiempoNubeMin) / gameVel;
 }
 
-function MoverInteractuables() {
+function MoverInteractuables() { //ESTA FUNCION PERMITE QUE LAS OLAS, EL DINO, LOS OBJETOS Y TODO LO INTERACTUABLE PUEDA MOVERSE, SIN ESTA FUNCION ESTARIA TODO ESTATICO
     for (var i = interactuables.length - 1; i >= 0; i--) {
         if(interactuables[i].posX < -interactuables[i].clientWidth) {
             interactuables[i].parentNode.removeChild(interactuables[i]);
@@ -237,7 +237,7 @@ function MoverInteractuables() {
     }
 }
 
-function MoverNubes() {
+function MoverNubes() { //ACA SE MUEVEN LAS NUBES, EN LA FUNCION CREARNUBE SE GENERAN Y ACA LAS MUEVE POR TODO EL CANVA
     for (var i = nubes.length - 1; i >= 0; i--) {
         if(nubes[i].posX < -nubes[i].clientWidth) {
             nubes[i].parentNode.removeChild(nubes[i]);
@@ -249,14 +249,14 @@ function MoverNubes() {
     }
 }
 
-function GanarPuntos() {
+function GanarPuntos() { //SE INCREMENTA UN PUNTO CADA QUE COLISIONA CON UNA MONEDA
     score++;
     textoScore.innerText = score;
-    audioMoneda.currentTime = 0;
+    audioMoneda.currentTime = 0; //SE AGREGA EL AUDIO POR AGARRAR LA MONEDA
     audioMoneda.play();
     if(score == 10){
         gameVel = 1.2;
-        contenedor.classList.add("mediodia");
+        contenedor.classList.add("mediodia"); //SE CAMBIA LA VELOCIDAD CON LA CUAL LAS MONEDAS CORREN 
     }else if(score == 25) {
         gameVel = 1.4;
         contenedor.classList.add("tarde");
@@ -267,24 +267,24 @@ function GanarPuntos() {
     suelo.style.animationDuration = (3/gameVel)+"s";
 }
 
-function GameOver() {
+function GameOver() { //SI HAY UNA COLISION SE MUESTRA ESTA ALERTA
     Estrellarse();
     gameOver.style.display = "block";
     audioGameOver.play();
 }
 
-function DetectarColision() {
+function DetectarColision() {  //CON ESTA FUNCION DETECTAMOS SI EL DINO SE CHOCA CON ALGUN OBSTACULO Y TOCA COMPARAR CON QUE SE CHOCO, SI ES UN OBSTACULO APAREZCA JUEGO PERDIDO Y SI ES UNA MONEDA SUME UN PUNTO
     for (var i = 0; i < interactuables.length; i++) {
         
         if(interactuables[i].posX > dinoPosX + dino.clientWidth) {
-            //EVADE
-            break; //al estar en orden, no puede chocar con más
+            
+            break; 
         }else{
             if(IsCollision(dino, interactuables[i], 10, 25, 10, 20)) {
                 if(interactuables[i].classList.contains("moneda")){
                     GanarPuntos();
                     interactuables[i].parentNode.removeChild(interactuables[i]);
-                    interactuables.splice(i, 1);
+                    interactuables.splice(i, 1); //SI ES MONEDA SE ELIMINA PARA NO VOLVER A CHOCARSE Y SUMAR DOBLE PUNTO SOLO CON UNA MONEDA
                 }else{
                     GameOver();
                 }
@@ -293,7 +293,7 @@ function DetectarColision() {
     }
 }
 
-function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
+function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) { //EN ESTA FUNCION SE DETECTA SI SE CHOCAN AMBOS, EL DINO Y EL OBSTACULO
     var aRect = a.getBoundingClientRect();
     var bRect = b.getBoundingClientRect();
 
